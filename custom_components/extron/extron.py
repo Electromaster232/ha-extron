@@ -132,7 +132,7 @@ class SurroundSoundProcessor:
         return self._device
 
     async def view_input(self) -> int:
-        return int(await self._device.run_command("$"))
+        return int((await self._device.run_command("$"))[3:])
 
     async def select_input(self, input: int):
         await self._device.run_command(f"{str(input)}$")
@@ -149,7 +149,7 @@ class SurroundSoundProcessor:
 
     async def get_volume_level(self):
         volume = await self._device.run_command("V")
-        return int(volume)
+        return int(volume[3:])
 
     async def set_volume_level(self, level: int):
         await self._device.run_command(f"{level}V")
@@ -161,7 +161,7 @@ class SurroundSoundProcessor:
         await self._device.run_command("-V")
 
     async def get_temperature(self) -> int:
-        temperature = await self._device.run_command("\x1b" + "20STAT")
+        temperature = await self._device.run_command("20S")
         return int(temperature)
 
 
