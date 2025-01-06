@@ -2,7 +2,7 @@ import asyncio
 import logging
 import re
 
-from asyncio import StreamReader, StreamWriter
+from asyncio import StreamReader, StreamWriter, sleep
 from asyncio.exceptions import TimeoutError
 from enum import Enum
 
@@ -95,7 +95,14 @@ class ExtronDevice:
                 raise RuntimeError("Command failed")
 
             if is_error_response(response):
-                raise ResponseError(f"Command failed with error code {response}")
+                # If response is E10, try command again
+                if response == "E10":
+                    await sleep(1)
+                    response = await asyncio.wait_for(self._run_command_internal(command), timeout=3)
+                    if is_error_response(response):
+                        raise ResponseError(f"Command failed with error code {response}")
+                else:
+                    raise ResponseError(f"Command failed with error code {response}")
 
             return response.strip()
         except TimeoutError:
