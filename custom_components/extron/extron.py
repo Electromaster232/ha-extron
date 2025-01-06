@@ -96,12 +96,12 @@ class ExtronDevice:
 
             if is_error_response(response):
                 # If response is E10, retry up to 5 times
-                if response == "E10":
+                if response.strip() == "E10":
                     count = 0
                     while count < 5:
-                        await sleep(1)
+                        await sleep(3)
                         response = await asyncio.wait_for(self._run_command_internal(command), timeout=3)
-                        if is_error_response(response) and response == "E10":
+                        if is_error_response(response) and response.strip() == "E10":
                             count+=1
                         else:
                             break
