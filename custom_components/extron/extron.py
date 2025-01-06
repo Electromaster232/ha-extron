@@ -149,7 +149,7 @@ class SurroundSoundProcessor:
 
     async def is_muted(self) -> bool:
         is_muted = await self._device.run_command("Z")
-        return is_muted == "1"
+        return is_muted == "Amt1"
 
     async def get_volume_level(self):
         volume = await self._device.run_command("V")
@@ -166,7 +166,7 @@ class SurroundSoundProcessor:
 
     async def get_temperature(self) -> int:
         temperature = await self._device.run_command("20S")
-        return int(temperature)
+        return int(temperature[6:])
 
 
 class HDMISwitcher:
