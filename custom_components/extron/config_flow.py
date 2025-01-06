@@ -53,7 +53,7 @@ class ExtronConfigFlow(ConfigFlow, domain=DOMAIN):
                 title = f"Extron {model_name}"
 
                 # Make a unique ID for the entry, prevent adding the same device twice
-                unique_id = format_mac(await extron_device.query_mac_address())
+                unique_id = format_mac(await extron_device.query_part_number())
                 await self.async_set_unique_id(unique_id)
                 self._abort_if_unique_id_configured()
 

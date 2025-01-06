@@ -51,11 +51,7 @@ class ExtronDevice:
         return None
 
     async def attempt_login(self):
-        async with self._semaphore:
-            await self._read_until("Password:")
-            self._writer.write(f"{self._password}\r".encode())
-            await self._writer.drain()
-            await self._read_until("Login Administrator\r\n")
+        return
 
     async def connect(self):
         self._reader, self._writer = await asyncio.open_connection(self._host, self._port)
@@ -123,12 +119,6 @@ class ExtronDevice:
 
     async def query_part_number(self):
         return await self.run_command("N")
-
-    async def query_mac_address(self):
-        return await self.run_command("\x1b" + "CH")
-
-    async def query_ip_address(self):
-        return await self.run_command("\x1b" + "CI")
 
     async def reboot(self):
         await self.run_command("\x1b" + "1BOOT")

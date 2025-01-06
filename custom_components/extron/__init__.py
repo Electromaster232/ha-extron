@@ -19,7 +19,6 @@ _LOGGER = logging.getLogger(__name__)
 
 @dataclass
 class DeviceInformation:
-    mac_address: str
     model_name: str
     device_info: DeviceInfo
 
@@ -32,23 +31,20 @@ class ExtronConfigEntryRuntimeData:
 
 
 async def get_device_information(device: ExtronDevice) -> DeviceInformation:
-    mac_address = await device.query_mac_address()
     model_name = await device.query_model_name()
     firmware_version = await device.query_firmware_version()
     part_number = await device.query_part_number()
-    ip_address = await device.query_ip_address()
 
     device_info = DeviceInfo(
-        identifiers={(DOMAIN, format_mac(mac_address))},
+        identifiers={(DOMAIN, part_number)},
         name=f"Extron {model_name}",
         manufacturer="Extron",
         model=model_name,
         sw_version=firmware_version,
-        serial_number=part_number,
-        configuration_url=f"http://{ip_address}/",
+        serial_number=part_number
     )
 
-    return DeviceInformation(mac_address=format_mac(mac_address), model_name=model_name, device_info=device_info)
+    return DeviceInformation(model_name=model_name, device_info=device_info)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

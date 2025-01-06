@@ -40,7 +40,7 @@ class ExtronDeviceTemperature(SensorEntity):
 
     @property
     def unique_id(self) -> str | None:
-        return f"extron_{self._device_information.mac_address}_temperature"
+        return f"extron_{self._device_information.model_name}_temperature"
 
     @property
     def device_info(self) -> DeviceInfo:

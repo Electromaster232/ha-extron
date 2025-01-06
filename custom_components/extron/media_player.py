@@ -51,9 +51,7 @@ class AbstractExtronMediaPlayerEntity(MediaPlayerEntity):
     @property
     def unique_id(self) -> str | None:
         device_type = self.get_device_type()
-        mac_address = self._device_information.mac_address
-
-        return f"extron_{device_type.value}_{mac_address}_media_player"
+        return f"extron_{device_type.value}_media_player"
 
     @property
     def state(self):

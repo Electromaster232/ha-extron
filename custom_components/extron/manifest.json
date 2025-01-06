@@ -1,9 +1,9 @@
 {
   "domain": "extron",
   "name": "Extron",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "codeowners": [
-    "@Jalle19"
+    "@Electromaster232"
   ],
   "config_flow": true,
   "integration_type": "device",
