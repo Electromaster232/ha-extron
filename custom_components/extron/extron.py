@@ -111,9 +111,6 @@ class ExtronDevice:
     async def query_model_name(self):
         return await self.run_command("1I")
 
-    async def query_model_description(self):
-        return await self.run_command("2I")
-
     async def query_firmware_version(self):
         return await self.run_command("Q")
 
