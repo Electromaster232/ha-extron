@@ -105,6 +105,8 @@ class ExtronDevice:
                             count+=1
                         else:
                             break
+                    if is_error_response(response):
+                        raise ResponseError(f"Command failed with error code {response}")
                 else:
                     raise ResponseError(f"Command failed with error code {response}")
 
